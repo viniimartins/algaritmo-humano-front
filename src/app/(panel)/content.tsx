@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { format } from 'date-fns'
@@ -17,6 +18,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -31,6 +33,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import {
   Sheet,
@@ -45,6 +48,8 @@ import { useModal } from '@/hooks/use-modal'
 import type { ICourse } from '@/modules/courses/model'
 import { useDeleteCourse } from '@/modules/courses/mutations/delete'
 import { useGetCourses } from '@/modules/courses/query/get'
+import { formatDuration } from '@/utils/formatDuration'
+import { courseStatus } from '@/utils/status'
 
 import { FormContainer } from './form'
 
@@ -73,14 +78,12 @@ export function Content() {
 
   const { mutateAsync: deleteCourse } = useDeleteCourse({ queryKey })
 
-  const handleDeleteTask = (id: string) => {
+  const handleDeleteCourse = (id: string) => {
     deleteCourse(
       { courseId: id },
       {
         onSuccess: () => {
-          toast('Task excluido com sucesso!', {
-            description: 'O Task foi excluido à lista.',
-          })
+          toast('Curso excluido com sucesso!')
         },
       },
     )
@@ -143,21 +146,31 @@ export function Content() {
 
         {!isFetching &&
           courses?.data.map((course) => {
-            const { id, title, description, createdAt } = course
+            const {
+              id,
+              title,
+              status,
+              image,
+              duration,
+              description,
+              createdAt,
+            } = course
+
+            const { variant, statusName } = courseStatus(status)
 
             return (
-              <Card key={id} className="h-96 w-full">
-                <CardHeader className="flex flex-row justify-between">
+              <Card key={id} className="flex h-[40rem] w-full flex-col">
+                <CardHeader className="flex justify-between">
                   <CardTitle className="truncate text-xl">{title}</CardTitle>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="h-[2rem] w-[2rem] p-0 hover:cursor-pointer"
+                        className="h-8 w-8 p-0 hover:cursor-pointer"
+                        aria-label="Open menu"
                       >
-                        <span className="sr-only">Open menu</span>
-                        <MoreHorizontal className="h-[1rem] w-[1rem]" />
+                        <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -174,15 +187,36 @@ export function Content() {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground line-clamp-8 overflow-auto text-base">
+
+                <CardContent className="flex flex-1 flex-col gap-2">
+                  <div className="relative h-64 w-full overflow-hidden rounded-t-md">
+                    <img
+                      src={image}
+                      alt={`Image ${title}`}
+                      className="h-full w-full"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <ScrollArea className="text-muted-foreground line-clamp-3 max-h-[14rem] min-h-[4rem] overflow-auto px-2">
                     {description}
-                  </p>
+                  </ScrollArea>
                 </CardContent>
-                <CardFooter className="m-0 mt-auto flex items-end justify-between">
-                  <time className="text-xs font-medium">
-                    {format(createdAt, 'dd/MM/yyyy')}
-                  </time>
+
+                <CardFooter className="mt-auto flex items-center justify-between">
+                  <div className="flex gap-2">
+                    <time className="text-xs font-medium">
+                      {format(createdAt, 'dd/MM/yyyy')}
+                    </time>
+
+                    <time className="text-xs font-medium">
+                      {formatDuration(duration)}
+                    </time>
+                  </div>
+
+                  <Badge className="h-8" variant={variant}>
+                    {statusName}
+                  </Badge>
                 </CardFooter>
               </Card>
             )
@@ -222,7 +256,7 @@ export function Content() {
             </AlertDialogTitle>
             <AlertDialogDescription>
               Esta ação não pode ser desfeita. Isso irá remover permanentemente
-              a Task e todos os dados associados a ele.
+              o curso e todos os dados associados a ele.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -231,7 +265,7 @@ export function Content() {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={() =>
-                handleDeleteTask(toDeleteAlertDialogCourse?.id ?? '')
+                handleDeleteCourse(toDeleteAlertDialogCourse?.id ?? '')
               }
             >
               Deletar

@@ -29,7 +29,7 @@ export function useDeleteCourse({ queryKey }: QueryKeyProps) {
 
       queryClient.setQueryData(queryKey, (old?: ICourse[]) => {
         if (old) {
-          return old.filter((task) => task.id !== courseId)
+          return old.filter((course) => course.id !== courseId)
         }
         return old
       })

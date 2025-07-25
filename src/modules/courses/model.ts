@@ -6,5 +6,5 @@ export interface ICourse extends IBaseEntity {
   description: string
   image: string
   duration: string
-  status: CourseStatus | undefined
+  status: CourseStatus
 }

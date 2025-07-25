@@ -61,8 +61,8 @@ const courseSchema = z.object({
     .string({
       required_error: 'A duração é obrigatória.',
     })
-    .regex(/^\d{2}:\d{2}:\d{2}$/, {
-      message: 'A duração deve estar no formato HH:MM:SS.',
+    .regex(/^\d{2}:\d{2}$/, {
+      message: 'A duração deve estar no formato HH:MM.',
     }),
   status: z.enum([CourseStatus.ACTIVE, CourseStatus.INACTIVE], {
     required_error: 'O status é obrigatório.',
@@ -74,12 +74,12 @@ type ICourseFormData = z.infer<typeof courseSchema>
 export function FormContainer(props: Props) {
   const { toUpdateModalCourse, queryKey, actionsModalCourse } = props
 
-  const { mutateAsync: handleCreateTask, isPending: isPendingCreateTask } =
+  const { mutateAsync: handleCreateCourse, isPending: isPendingCreateCourse } =
     useCreateCourse({
       queryKey,
     })
 
-  const { mutateAsync: handleUpdateTask, isPending: isPendingUpdateTask } =
+  const { mutateAsync: handleUpdateCourse, isPending: isPendingUpdateCourse } =
     useUpdateCourse({
       queryKey,
     })
@@ -102,20 +102,18 @@ export function FormContainer(props: Props) {
 
   function onSubmit(courseData: ICourseFormData) {
     if (!toUpdateModalCourse) {
-      handleCreateTask(
+      handleCreateCourse(
         { course: courseData },
         {
           onSuccess: () => {
-            toast('Task criado com sucesso!', {
-              description: 'O Task foi adicionado à lista.',
-            })
+            toast('Curso criado com sucesso!')
           },
         },
       )
     }
 
     if (toUpdateModalCourse) {
-      handleUpdateTask(
+      handleUpdateCourse(
         {
           course: courseData,
           id: toUpdateModalCourse.id,
@@ -134,7 +132,8 @@ export function FormContainer(props: Props) {
     reset()
   }
 
-  const isLoading = isPendingCreateTask || isPendingUpdateTask || isSubmitting
+  const isLoading =
+    isPendingCreateCourse || isPendingUpdateCourse || isSubmitting
 
   return (
     <Form {...form}>
@@ -194,7 +193,7 @@ export function FormContainer(props: Props) {
                   <Input
                     placeholder="Digite a duração do curso"
                     {...field}
-                    ref={withMask('99:99:99', {
+                    ref={withMask('99:99', {
                       placeholder: '-',
                       showMaskOnHover: false,
                     })}
