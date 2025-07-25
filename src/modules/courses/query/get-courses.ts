@@ -30,7 +30,7 @@ export function useGetCourses(params: Paginated.Params) {
   useEffect(() => {
     if (isError) {
       toast('Opss, algo deu errado!', {
-        description: 'o foi possível buscar os cursos. Tente novamente',
+        description: 'Não foi possível buscar os cursos. Tente novamente',
       })
     }
   }, [isError])

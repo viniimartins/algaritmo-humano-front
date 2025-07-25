@@ -31,7 +31,7 @@ export function useGetCoursesByUser(params: Paginated.Params) {
     if (isError) {
       toast('Opss, algo deu errado!', {
         description:
-          'o foi possível buscar os cursos do usuário. Tente novamente',
+          'Não foi possível buscar os cursos do usuário. Tente novamente',
       })
     }
   }, [isError])
