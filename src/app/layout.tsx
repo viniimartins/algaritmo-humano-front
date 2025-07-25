@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     template: `Algoritmo Humano | %s`,
-    default: 'Painel',
+    default: 'Cursos',
   },
   description:
     'Plataforma para cadastro, organização e gestão de cursos online. Crie sua conta e gerencie seus conteúdos educacionais de forma simples e eficiente.',

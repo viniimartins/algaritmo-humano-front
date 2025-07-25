@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { getSession, signOut } from 'next-auth/react'
+import qs from 'qs'
 
 import { env } from '@/env'
 
@@ -7,6 +8,7 @@ const baseURL = env.NEXT_PUBLIC_API_URL
 
 export const api = axios.create({
   baseURL,
+  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
 })
 
 let token: string | null = null

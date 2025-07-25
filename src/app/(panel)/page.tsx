@@ -1,5 +1,5 @@
 import { Content } from './content'
 
-export default function PanelPage() {
+export default function CoursesPage() {
   return <Content />
 }

@@ -10,7 +10,7 @@ export default async function AuthenticationLayout({
     <main className="h-[100vh] w-full overflow-hidden lg:grid lg:grid-cols-2">
       <div className="bg-muted hidden lg:block">
         <Image
-          src="/tasks.jpg"
+          src="/course.jpg"
           alt="Image"
           priority
           width="1920"

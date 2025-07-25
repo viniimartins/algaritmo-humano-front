@@ -2,6 +2,7 @@ export namespace Paginated {
   export type Params = {
     page: number
     limit: number
+    filters?: string[]
   }
 
   export type Response<T> = {
