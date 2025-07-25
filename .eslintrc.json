@@ -8,6 +8,7 @@
     "simple-import-sort"
   ],
   "rules": {
+    "@typescript-eslint/no-namespace": "off",
     "simple-import-sort/imports": "error",
     "react-hooks/rules-of-hooks": "off",
     "camelcase": "off",

@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         const { data } = await api.post<SignIn>(
-          `${env.NEXT_PUBLIC_API_URL}/api/auth/session`,
+          `${env.NEXT_PUBLIC_API_URL}/sign-in`,
           {
             email: credentials?.email,
             password: credentials?.password,

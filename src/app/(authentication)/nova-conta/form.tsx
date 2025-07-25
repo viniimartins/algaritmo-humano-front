@@ -18,8 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-import { useCreateAccount } from './hooks/use-create-account'
+import { useCreateAccount } from '@/modules/users/mutations/create'
 
 const createAccountSchema = z
   .object({

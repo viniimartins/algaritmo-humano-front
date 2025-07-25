@@ -20,7 +20,8 @@ export const metadata: Metadata = {
     template: `Algoritmo Humano | %s`,
     default: 'Painel',
   },
-  description: 'Plataforma para cadastro, organização e gestão de cursos online. Crie sua conta e gerencie seus conteúdos educacionais de forma simples e eficiente.',
+  description:
+    'Plataforma para cadastro, organização e gestão de cursos online. Crie sua conta e gerencie seus conteúdos educacionais de forma simples e eficiente.',
 }
 
 export default function RootLayout({

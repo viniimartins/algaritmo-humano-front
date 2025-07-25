@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { api } from '@/service/api'
 import type { Account } from '@/modules/users/model'
+import { api } from '@/service/api'
 
 export interface CreateAccount {
   account: Account
 }
 
 async function create({ account }: CreateAccount) {
-  const { data } = await api.post('/register', {
+  const { data } = await api.post('/sign-up', {
     ...account,
   })
 

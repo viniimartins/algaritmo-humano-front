@@ -1,0 +1,39 @@
+import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
+
+import type { Paginated } from '@/helpers/paginated'
+import { api } from '@/service/api'
+import { ProductMock } from '@/shared/mock/product'
+
+import type { ICourse } from '../model'
+
+async function get(params: Paginated.Params) {
+  const { data } = await api.get<Paginated.Response<ICourse>>('/courses', {
+    params,
+  })
+
+  return data
+}
+
+export function useGetCourses(params: Paginated.Params) {
+  const queryKey = ['get-courses', params]
+
+  const query = useQuery({
+    queryKey,
+    queryFn: () => get(params),
+    placeholderData: ProductMock,
+  })
+
+  const { isError } = query
+
+  useEffect(() => {
+    if (isError) {
+      toast('Erro ao carregar cursos', {
+        description: 'Não foi possível buscar os produtos. Tente novamente.',
+      })
+    }
+  }, [isError])
+
+  return { ...query, queryKey }
+}

@@ -16,7 +16,8 @@ export default function Login() {
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-center text-3xl font-bold">Algoritmo Humano</h1>
         <span className="text-muted-foreground text-sm">
-          Acesse sua conta para cadastrar e gerenciar seus cursos de forma simples e eficiente.
+          Acesse sua conta para cadastrar e gerenciar seus cursos de forma
+          simples e eficiente.
         </span>
       </div>
       <div className="mx-auto w-full max-w-md">
