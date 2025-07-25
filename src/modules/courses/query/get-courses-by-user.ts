@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 
 import type { Paginated } from '@/helpers/paginated'
 import { api } from '@/service/api'
-import { ProductMock } from '@/shared/mock/product'
+import { ProductMock } from '@/shared/mock/course'
 
 import type { ICourse } from '../model'
 
